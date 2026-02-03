@@ -11,16 +11,7 @@ try:
     features_json = sys.argv[2]
     features_dict = json.loads(features_json)
     
-    # Ensure correct feature order (XGBoost is picky about column order usually, 
-    # but for simple array input we need to be careful. DataFrame is safer if we know cols.)
-    # For this demo, we'll assume features_dict comes in correct order or create dataframe.
-    # To be safe, let's match the columns from dataset.py: Temperature, Pressure, Vibration, RPM
-    # Or just convert values to list if features_dict is actually just a dict
-    
-    # Ideally we'd pickle the column names too. For now let's trust the input.
-    # Convert dict values to list for prediction
-    
-    # Expected keys for DataFrame construction
+   
     expected_cols = ['Temperature', 'Pressure', 'Speed', 'Vibration', 'Humidity', 'Power_Consumption', 'Material_Hardness']
     
     # If input is a list, usage is direct. If dict, convert.
