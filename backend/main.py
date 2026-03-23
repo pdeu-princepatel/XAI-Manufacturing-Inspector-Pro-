@@ -7,8 +7,9 @@ import numpy as np
 
 # Adjust path to find modules if needed, or rely on running from backend/
 # Assuming running `uvicorn main:app` from `backend/`
-from ml.models import train_xgboost
-from ml.dataset import build_training_sets, generate_manufacturing_data
+# Assuming running `uvicorn main:app` from `backend/`
+from models import train_xgboost_classifier
+from dataset import build_training_sets
 
 app = FastAPI()
 
@@ -23,7 +24,7 @@ class PredictionRequest(BaseModel):
     Material_Hardness: float
 
 # Load Model (Global variable, loaded on startup or request)
-MODEL_PATH = os.path.join(os.path.dirname(__file__), 'models', 'xgboost.joblib')
+MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'xgboost_classifier.joblib')
 MODELS_DIR = os.path.dirname(MODEL_PATH)
 
 def load_model():
@@ -68,13 +69,13 @@ def train_model():
         # Ensure data exists or generate it
         data_path = os.path.join(os.path.dirname(__file__), 'data', 'manufacturing_data.csv')
         if not os.path.exists(data_path):
-             generate_manufacturing_data()
+             pass # build_training_sets will handle missing file
         
         # Load data (modified build_training_sets needs to know where to look or we pass it)
         # Note: We need to ensure build_training_sets looks at the right CSV
         X, y = build_training_sets(path=data_path)
         
-        model, metrics = train_xgboost(X, y)
+        model, metrics, _, _ = train_xgboost_classifier(X, y)
         
         os.makedirs(MODELS_DIR, exist_ok=True)
         joblib.dump(model, MODEL_PATH)

@@ -1,0 +1,27 @@
+<div class="card-wrapper">
+    <div class="card-content result-card-inner">
+        <div class="badge <%= prediction.status === 'Fail' ? 'badge-warning' : 'badge-success' %>">
+            <%= prediction.status==='Fail' ? 'Maintenance Recommended' : 'System Healthy' %>
+        </div>
+
+        <h1>Analysis Results</h1>
+        <p class="subtitle">Based on current readings, here is the status of your equipment.</p>
+
+        <div class="result-value">
+            <%= (prediction.failure_probability * 100).toFixed(0) %>%
+        </div>
+        <div class="result-label">Risk Level</div>
+
+        <div class="summary-text">
+            <% if (prediction.status==='Fail' ) { %>
+                Our sensors detected anomalies. We recommend scheduling a physical inspection soon to avoid downtime.
+                <% } else { %>
+                    Everything looks great! The machine is operating within its optimal parameters.
+                    <% } %>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <a href="/" class="back-link">← Return to Dashboard</a>
+        </div>
+    </div>
+</div>

@@ -16,9 +16,9 @@ try:
     
     # If input is a list, usage is direct. If dict, convert.
     if isinstance(features_dict, dict):
-        # Fill missing with 0 or handle error
+
         data_list = [features_dict.get(col, 0) for col in expected_cols]
-        # Create DataFrame to preserve feature names for SHAP and XGBoost
+
         features_df = pd.DataFrame([features_dict])
     else:
         # Assuming list

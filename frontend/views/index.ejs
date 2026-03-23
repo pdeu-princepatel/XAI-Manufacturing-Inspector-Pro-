@@ -4,147 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manufacturing Inspector</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        .result {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 4px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .pass {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .fail {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .error {
-            background-color: #ffeeba;
-            color: #856404;
-            padding: 10px;
-            margin-top: 20px;
-            text-align: center;
-            border-radius: 4px;
-        }
-    </style>
+    <title>Inspector Pro | AI Quality Analysis</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>Inspector Pro </h1>
+    <%- include('partials/header') %>
 
-        <% if (error) { %>
-            <div class="error">
-                <%= error %>
-            </div>
-            <% } %>
-
-                <% if (prediction) { %>
-                    <div class="result <%= prediction.status === 'Fail' ? 'fail' : 'pass' %>">
-                        <h2>Result: <%= prediction.status %>
-                        </h2>
-                        <p>Failure Probability: <%= (prediction.failure_probability * 100).toFixed(2) %>%</p>
-                        <a href="/" style="text-decoration: none; color: inherit; border-bottom: 1px dashed;">Test
-                            Another</a>
+        <main class="container">
+            <div
+                style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center;">
+                <% if (error) { %>
+                    <div class="alert alert-error">
+                        <strong>Error:</strong>
+                        <%= error %>
                     </div>
-                    <% } else { %>
-                        <form action="/get-prediction" method="POST">
-                            <div class="form-group">
-                                <label>Temperature (°C)</label>
-                                <input type="number" name="Temperature" step="0.1" value="70" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Pressure (PSI)</label>
-                                <input type="number" name="Pressure" step="0.1" value="50" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Speed (RPM)</label>
-                                <input type="number" name="Speed" step="1" value="1500" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Vibration (mm/s)</label>
-                                <input type="number" name="Vibration" step="0.1" value="5" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Humidity (%)</label>
-                                <input type="number" name="Humidity" step="0.1" value="50" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Power Consumption (kW)</label>
-                                <input type="number" name="Power_Consumption" step="0.1" value="15" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Material Hardness</label>
-                                <input type="number" name="Material_Hardness" step="0.1" value="60" required>
-                            </div>
+                    <% } %>
 
-                            <button type="submit">Analyze Quality</button>
-                        </form>
-                        <% } %>
-    </div>
+                        <% if (prediction) { %>
+                            <%- include('partials/result-card', { prediction: prediction }) %>
+                                <% } else { %>
+                                    <%- include('partials/inspector-form') %>
+                                        <% } %>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
 
 </body>
 
