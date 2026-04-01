@@ -1,46 +1,65 @@
-<div class="card-wrapper">
-    <div class="card-content">
-        <h1>Machine Check-up</h1>
-        <p class="subtitle">Enter the current machine readings below. Our system will analyze the health of your
-            equipment in real-time.</p>
+<div class="glowing-card-shell">
+    <div class="card-body">
+        <h1 class="page-heading">Machine Check-up</h1>
+        <p class="page-description">
+            Enter your equipment's current sensor readings below. Our AI will instantly analyse the machine's
+            health and tell you exactly why it reached its conclusion.
+        </p>
 
         <form action="/get-prediction" method="POST">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>System Temperature (°C)</label>
-                    <input type="number" name="Temperature" step="0.1" value="70" required>
+            <div class="sensor-grid">
+
+                <div class="sensor-field">
+                    <label class="field-label" for="field-temperature">System Temperature (°C)</label>
+                    <input class="field-input" type="number" id="field-temperature"
+                           name="Temperature" step="0.1" value="70" required>
                 </div>
-                <div class="form-group">
-                    <label>Internal Pressure (PSI)</label>
-                    <input type="number" name="Pressure" step="0.1" value="50" required>
+
+                <div class="sensor-field">
+                    <label class="field-label" for="field-pressure">Internal Pressure (PSI)</label>
+                    <input class="field-input" type="number" id="field-pressure"
+                           name="Pressure" step="0.1" value="50" required>
                 </div>
-                <div class="form-group">
-                    <label>Operation Speed (RPM)</label>
-                    <input type="number" name="Speed" step="1" value="1500" required>
+
+                <div class="sensor-field">
+                    <label class="field-label" for="field-speed">Operation Speed (RPM)</label>
+                    <input class="field-input" type="number" id="field-speed"
+                           name="Speed" step="1" value="1500" required>
                 </div>
-                <div class="form-group">
-                    <label>Vibration Level (mm/s)</label>
-                    <input type="number" name="Vibration" step="0.1" value="5" required>
+
+                <div class="sensor-field">
+                    <label class="field-label" for="field-vibration">Vibration Level (mm/s)</label>
+                    <input class="field-input" type="number" id="field-vibration"
+                           name="Vibration" step="0.1" value="5" required>
                 </div>
-                <div class="form-group">
-                    <label>Ambient Humidity (%)</label>
-                    <input type="number" name="Humidity" step="0.1" value="50" required>
+
+                <div class="sensor-field">
+                    <label class="field-label" for="field-humidity">Ambient Humidity (%)</label>
+                    <input class="field-input" type="number" id="field-humidity"
+                           name="Humidity" step="0.1" value="50" required>
                 </div>
-                <div class="form-group">
-                    <label>Power Usage (kW)</label>
-                    <input type="number" name="Power_Consumption" step="0.1" value="15" required>
+
+                <div class="sensor-field">
+                    <label class="field-label" for="field-power">Power Usage (kW)</label>
+                    <input class="field-input" type="number" id="field-power"
+                           name="Power_Consumption" step="0.1" value="15" required>
                 </div>
-                <div class="form-group full-width">
-                    <label>Work Material Hardness</label>
-                    <input type="number" name="Material_Hardness" step="0.1" value="60" required>
+
+                <div class="sensor-field full-row">
+                    <label class="field-label" for="field-hardness">Work Material Hardness</label>
+                    <input class="field-input" type="number" id="field-hardness"
+                           name="Material_Hardness" step="0.1" value="60" required>
                 </div>
+
             </div>
-            <button type="submit">
-                <span>Run Health Analysis</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m5 12 7 7 7-7" />
+
+            <button class="submit-button" type="submit" id="run-analysis-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="3"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
                 </svg>
+                <span>Run Health Analysis</span>
             </button>
         </form>
     </div>

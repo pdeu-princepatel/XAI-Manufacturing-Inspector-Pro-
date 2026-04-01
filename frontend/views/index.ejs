@@ -4,38 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inspector Pro | AI Quality Analysis</title>
+    <meta name="description" content="Manufacturing Inspector Pro — AI-powered equipment health analysis using explainable machine learning.">
+    <title>Inspector Pro | Equipment Health Analysis</title>
+    <!-- Only local CSS from public folder — no external href links -->
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
 </head>
 
 <body>
 
     <%- include('partials/header') %>
 
-        <main class="container">
-            <div
-                style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center;">
-                <% if (error) { %>
-                    <div class="alert alert-error">
-                        <strong>Error:</strong>
-                        <%= error %>
-                    </div>
-                    <% } %>
+    <main class="page-wrapper <%= prediction ? '' : 'center-form' %>">
+        <div style="width:100%;">
 
-                        <% if (prediction) { %>
-                            <%- include('partials/result-card', { prediction: prediction }) %>
-                                <% } else { %>
-                                    <%- include('partials/inspector-form') %>
-                                        <% } %>
-            </div>
-        </main>
+            <% if (error) { %>
+                <div class="error-alert">
+                    <strong>Something went wrong:</strong> <%= error %>
+                </div>
+            <% } %>
 
-        <%- include('partials/footer') %>
+            <% if (prediction) { %>
+                <%- include('partials/result-card', { prediction: prediction }) %>
+            <% } else { %>
+                <div class="form-card">
+                    <%- include('partials/inspector-form') %>
+                </div>
+            <% } %>
+
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
 
 </body>
 

@@ -1,8 +1,9 @@
-const express = require('express');
+const express    = require('express');
 const bodyParser = require('body-parser');
-const axios = require('axios');
-const path = require('path');
-const app = express();
+const axios      = require('axios');
+const path       = require('path');
+
+const app  = express();
 const PORT = 5000;
 
 // Middleware
@@ -14,52 +15,49 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
 
-// 1. Landing Page (The Form)
+// Landing page → show the input form
 app.get('/', (req, res) => {
     res.render('index', { prediction: null, error: null });
 });
 
-// 2. Handle Form Submission
+// Handle form submission → call AI core, render results
 app.post('/get-prediction', async (req, res) => {
     const formData = req.body;
 
-    // Convert string inputs to numbers
     const features = {
-        Temperature: parseFloat(formData.Temperature),
-        Pressure: parseFloat(formData.Pressure),
-        Speed: parseFloat(formData.Speed),
-        Vibration: parseFloat(formData.Vibration),
-        Humidity: parseFloat(formData.Humidity),
+        Temperature:       parseFloat(formData.Temperature),
+        Pressure:          parseFloat(formData.Pressure),
+        Speed:             parseFloat(formData.Speed),
+        Vibration:         parseFloat(formData.Vibration),
+        Humidity:          parseFloat(formData.Humidity),
         Power_Consumption: parseFloat(formData.Power_Consumption),
         Material_Hardness: parseFloat(formData.Material_Hardness)
     };
 
-    console.log("Sending data to AI Core:", features);
+    console.log('Sending readings to AI Core:', features);
 
     try {
         const response = await axios.post('http://localhost:8000/predict', features);
-        const result = response.data;
+        const result   = response.data;
 
-        // Render the page again with results
+        // Attach the raw sensor inputs so the front-end charts
+        // (radar, signal lights) can use the actual submitted values
+        result.inputs = features;
 
         res.render('index', { prediction: result, error: null });
-    } catch (error) {
-        let errorMessage = "Could not connect to AI Core. Is it running?";
 
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.error("AI Core returned error:", error.response.data);
-            if (error.response.data && error.response.data.detail) {
-                errorMessage = `AI Error: ${error.response.data.detail}`;
-            } else {
-                errorMessage = `AI Server Error (${error.response.status})`;
-            }
-        } else if (error.request) {
-            // The request was made but no response was received
-            console.error("No response from AI Core:", error.message);
+    } catch (err) {
+        let errorMessage = 'Could not reach AI Core — is it running?';
+
+        if (err.response) {
+            console.error('AI Core returned an error:', err.response.data);
+            errorMessage = err.response.data && err.response.data.detail
+                ? `AI Error: ${err.response.data.detail}`
+                : `AI Server Error (${err.response.status})`;
+        } else if (err.request) {
+            console.error('No response received from AI Core:', err.message);
         } else {
-            console.error("Error setting up request:", error.message);
+            console.error('Request setup error:', err.message);
         }
 
         res.render('index', { prediction: null, error: errorMessage });
@@ -67,5 +65,5 @@ app.post('/get-prediction', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Web App running on http://localhost:${PORT}`);
+    console.log(`Inspector Pro running at http://localhost:${PORT}`);
 });
