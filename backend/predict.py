@@ -14,14 +14,14 @@ try:
    
     expected_cols = ['Temperature', 'Pressure', 'Speed', 'Vibration', 'Humidity', 'Power_Consumption', 'Material_Hardness']
     
-    # If input is a list, usage is direct. If dict, convert.
+    # Map the incoming JSON payload smoothly whether it comes in as a standard dictionary or a flat list
     if isinstance(features_dict, dict):
 
         data_list = [features_dict.get(col, 0) for col in expected_cols]
 
         features_df = pd.DataFrame([features_dict])
     else:
-        # Assuming list
+        # If it comes as a raw list, we wrap it with our predefined sensor names
         features_df = pd.DataFrame([features_dict], columns=expected_cols)
 
     model_path = os.path.join(os.path.dirname(__file__), '..', 'models', f'{model_name}.joblib')

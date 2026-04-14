@@ -9,6 +9,20 @@
         <form action="/get-prediction" method="POST">
             <div class="sensor-grid">
 
+                <div class="sensor-field full-row">
+                    <label class="field-label" for="field-machine-id">Machine Identifier</label>
+                    <select class="field-input" id="field-machine-id" name="Machine_ID" required style="cursor: pointer;">
+                        <option value="CNC Lathe Machine (CNC-L-01)">CNC Lathe Machine (CNC-L-01)</option>
+                        <option value="5-Axis Milling Machine (MIL-5X-02)">5-Axis Milling Machine (MIL-5X-02)</option>
+                        <option value="Hydraulic Press (PRS-HYD-03)">Hydraulic Press (PRS-HYD-03)</option>
+                        <option value="Industrial Robot Arm (ROB-ARM-04)">Industrial Robot Arm (ROB-ARM-04)</option>
+                        <option value="Injection Molding Unit (INJ-MLD-05)">Injection Molding Unit (INJ-MLD-05)</option>
+                        <option value="Automated Conveyor System (CON-SYS-06)">Automated Conveyor System (CON-SYS-06)</option>
+                        <option value="Laser Cutting Machine (LSR-CUT-07)">Laser Cutting Machine (LSR-CUT-07)</option>
+                        <option value="Centrifugal Pump (PMP-CEN-08)">Centrifugal Pump (PMP-CEN-08)</option>
+                    </select>
+                </div>
+
                 <div class="sensor-field">
                     <label class="field-label" for="field-temperature">System Temperature (°C)</label>
                     <input class="field-input" type="number" id="field-temperature"

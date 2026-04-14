@@ -15,12 +15,12 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Routes
 
-// Landing page → show the input form
+// Serve the initial landing page containing the sensor data input form
 app.get('/', (req, res) => {
     res.render('index', { prediction: null, error: null });
 });
 
-// Handle form submission → call AI core, render results
+// Process incoming sensor data, submit it to the backend AI engine, and render the evaluation results
 app.post('/get-prediction', async (req, res) => {
     const formData = req.body;
 
@@ -40,9 +40,12 @@ app.post('/get-prediction', async (req, res) => {
         const response = await axios.post('http://localhost:8000/predict', features);
         const result   = response.data;
 
-        // Attach the raw sensor inputs so the front-end charts
-        // (radar, signal lights) can use the actual submitted values
+        // Include the original sensor inputs in the response so our frontend visualizations
+        // (such as the radar chart and signal indicators) can display the exact data submitted
         result.inputs = features;
+        
+        // Ensure the specific machine ID is carried over for reporting
+        result.machine_id = req.body.Machine_ID || "Unknown Machine";
 
         res.render('index', { prediction: result, error: null });
 

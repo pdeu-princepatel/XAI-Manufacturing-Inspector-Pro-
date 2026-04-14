@@ -11,11 +11,11 @@ def build_training_sets(path=None, target_type='classification'):
     Returns: X (DataFrame), y (Series)
     """
     if path is None:
-        # Default path relative to this file
+        # Set the default path pointing to our main dataset file relative to this script's location
         path = os.path.join(os.path.dirname(__file__), '../../Explainable_AI_Dataset_10000.xlsx')
         path = os.path.abspath(path)
 
-    # Expected features
+    # Define the core sensor metrics we expect to find in the dataset
     feature_cols = [
         'Temperature', 'Pressure', 'Speed', 'Vibration', 
         'Humidity', 'Power_Consumption', 'Material_Hardness'
@@ -27,7 +27,7 @@ def build_training_sets(path=None, target_type='classification'):
         try:
             df = pd.read_excel(path)
             
-            # Check for missing columns
+            # Verify that our dataset contains all the essential sensor columns before proceeding
             missing = [col for col in feature_cols + [target_col] if col not in df.columns]
             if not missing:
                 X = df[feature_cols]
@@ -55,7 +55,7 @@ def build_training_sets(path=None, target_type='classification'):
         'Material_Hardness': np.random.normal(60, 10, n_samples)
     })
     
-    # Logic: High Vibe + High Temp = Failure
+    # Simulated risk logic: Combining extreme vibration and high temperature spikes the probability of failure
     prob = (
         (X['Temperature'] > 90).astype(int) * 0.5 + 
         (X['Vibration'] > 4).astype(int) * 0.6 + 

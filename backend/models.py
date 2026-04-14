@@ -13,7 +13,7 @@ import numpy as np
 
 def train_linear_regression(X, y):
     """
-    Trains a Linear Regression model and returns the model and metrics.
+    Trains a basic Linear Regression model to predict continuous values and returns both the trained model and its performance metrics.
     """
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
@@ -134,14 +134,14 @@ def train_decision_tree_classifier(X, y):
 
 def generate_shap_explanation(model, X_train, X_sample, model_type='tree'):
     """
-    Generates SHAP values for a given model and sample.
+    Calculates SHAP values to clear up the "black box" by explaining how each feature influenced the model's specific prediction.
     Args:
-        model: Trained model
-        X_train: Training data for background
-        X_sample: Sample to explain (single row as DataFrame)
-        model_type: 'tree' for tree-based models, 'linear' for linear models
+        model: The trained AI model generating the prediction
+        X_train: Background training data used to establish a baseline
+        X_sample: The specific sensor reading (single row) we want to understand
+        model_type: Use 'tree' for decision trees or 'linear' for simpler linear models
     Returns:
-        dict with SHAP values and base value
+        A dictionary containing the calculated SHAP impacts and the expected base value
     """
     try:
         if model_type == 'tree':
@@ -151,7 +151,7 @@ def generate_shap_explanation(model, X_train, X_sample, model_type='tree'):
         
         shap_values = explainer.shap_values(X_sample)
         
-        # Handle both 1D and 2D SHAP values
+        # Extracting the target class values since SHAP can return them in different formats depending on the model
         if isinstance(shap_values, list):
             shap_values = shap_values[1]  # For binary classification, take positive class
         
@@ -169,14 +169,14 @@ def generate_shap_explanation(model, X_train, X_sample, model_type='tree'):
 
 def generate_lime_explanation(model, X_train, X_sample, mode='classification'):
     """
-    Generates LIME explanation for a given model and sample.
+    Creates a local LIME explanation to show which sensor readings were most critical for this specific prediction.
     Args:
-        model: Trained model
-        X_train: Training data for background
-        X_sample: Sample to explain (single row as DataFrame)
-        mode: 'classification' or 'regression'
+        model: The trained AI model to be explained
+        X_train: The background training data
+        X_sample: The specific sensor reading (single row) we are evaluating
+        mode: Choose 'classification' (pass/fail) or 'regression' (continuous value)
     Returns:
-        dict with feature importance from LIME
+        A dictionary detailing the feature importance scores calculated by LIME
     """
     try:
         explainer = lime.lime_tabular.LimeTabularExplainer(

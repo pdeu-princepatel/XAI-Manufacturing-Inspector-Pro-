@@ -13,7 +13,7 @@ from models import (
     generate_lime_explanation
 )
 
-# Ensure models directory exists
+# Create the directory where all our trained AI models will be saved
 MODELS_DIR = os.path.join(os.path.dirname(__file__), '..', 'models')
 os.makedirs(MODELS_DIR, exist_ok=True)
 
@@ -24,7 +24,7 @@ try:
     print("TRAINING REGRESSION MODELS")
     print("=" * 60)
     
-    # Load regression dataset
+    # Load the dataset specifically prepared for predicting continuous metrics (regression)
     X_reg, y_reg = build_training_sets(target_type='regression')
     
     # 1. Linear Regression
@@ -52,7 +52,7 @@ try:
     print("TRAINING CLASSIFICATION MODELS")
     print("=" * 60)
     
-    # Load classification dataset
+    # Load the dataset specifically prepared for binary pass/fail predictions (classification)
     X_clf, y_clf = build_training_sets(target_type='classification')
     
     # 4. Logistic Regression
@@ -80,7 +80,7 @@ try:
     print("GENERATING XAI EXPLANATIONS (Sample)")
     print("=" * 60)
     
-    # Generate sample explanations for XGBoost Classifier
+    # Let's create a quick example showing how SHAP and LIME evaluate a single test data point
     sample_row = xgb_clf_X_test.iloc[[0]]
     
     print("\n[SHAP] Generating explanation for XGBoost Classifier...")
@@ -104,7 +104,7 @@ try:
     print("TRAINING COMPLETE")
     print("=" * 60)
     
-    # Output final metrics as JSON for Node.js backend
+    # Finally, print out all the performance metrics in standard JSON format so other services can easily read them
     print(json.dumps(all_metrics))
     
 except Exception as e:
