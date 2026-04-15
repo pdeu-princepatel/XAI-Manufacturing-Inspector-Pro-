@@ -70,7 +70,11 @@ app.post('/get-prediction', async (req, res) => {
             console.error('Request setup error:', err.message);
         }
 
-        res.render('index', { prediction: null, error: errorMessage, BACKEND_URL });
+        res.render('index', { 
+            prediction: null, 
+            error: `${errorMessage} (Target: ${BACKEND_URL}/predict)`, 
+            BACKEND_URL 
+        });
     }
 });
 
