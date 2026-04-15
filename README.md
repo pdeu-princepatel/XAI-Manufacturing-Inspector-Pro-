@@ -62,17 +62,21 @@ XAI-Manufacturing-Inspector-Pro/
 
 ---
 
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Python 3.9+
+- Python 3.12+
 - Node.js 18+
+- Docker (optional, for containerised deployment)
 
 ---
 
-### 1. Backend Setup
+### 1. Local Development Setup
 
+#### Backend Setup
 ```bash
 cd backend
 
@@ -86,23 +90,45 @@ python train_models.py
 uvicorn main:app --reload --port 8000
 ```
 
-The API will be available at: `http://localhost:8000`
+#### Frontend Setup
+```bash
+cd frontend
+npm install
+npm start
+```
+Go to: `http://localhost:5000`
 
 ---
 
-### 2. Frontend Setup
+## 🐳 Docker Deployment (Recommended)
+
+Run the backend via Docker for a consistent, production-ready environment:
 
 ```bash
-cd frontend
-
-# Install Node.js dependencies
-npm install express ejs axios body-parser chart.js
-
-# Start the Express server
-npm start
+cd backend
+docker build -t xai-backend .
+docker run -p 8000:8000 xai-backend
 ```
 
-The dashboard will be available at: `http://localhost:3000`
+---
+
+## 🚢 Cloud Deployment
+
+### 1. Backend (Railway)
+This project is configured for seamless deployment on **Railway** using the provided `backend/Dockerfile`.
+
+
+### 2. Frontend (Vercel)
+Deployed the Express/EJS frontend to **Vercel**:
+
+
+---
+
+## 📱 Responsiveness
+The dashboard is fully responsive and optimized for:
+- 💻 **Desktop**: Full multi-chart grid view.
+- 📱 **Mobile**: Collapsible tables and stacked KPI cards designed for screens as small as 320px (iPhone SE).
+- 📊 **Dynamic Scaling**: Canvas-based charts (Chart.js) and SVG (D3.js) adjust size automatically.
 
 ---
 

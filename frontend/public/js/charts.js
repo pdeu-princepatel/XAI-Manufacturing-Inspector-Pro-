@@ -556,7 +556,7 @@
         if (!container) return;
 
         try {
-            const res = await fetch('http://localhost:8000/dataset-analytics');
+            const res = await fetch(`${window.BACKEND_URL || 'http://localhost:8000'}/dataset-analytics`);
             if (!res.ok) throw new Error('Analytics endpoint failed');
             const data = await res.json();
             

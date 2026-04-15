@@ -1071,3 +1071,28 @@ footer {
     .kpi-value { font-size: 1.35rem; }
 }
 
+@media (max-width: 400px) {
+    :root {
+        --radius-card: 1rem;
+    }
+    .page-heading {
+        font-size: 1.75rem;
+    }
+    .score-number {
+        font-size: 3.2rem;
+    }
+    .card-body {
+        padding: 1.25rem 1rem;
+    }
+    .exec-summary-title {
+        font-size: 0.95rem;
+    }
+    .exec-summary-desc {
+        font-size: 0.8rem;
+    }
+    .status-badge {
+        padding: 0.45rem 1rem;
+        font-size: 0.75rem;
+    }
+}
+

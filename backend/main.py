@@ -14,7 +14,18 @@ import seaborn as sns
 from models import generate_shap_explanation
 from dataset import build_training_sets
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+# Enable CORS for frontend deployment
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # In production, you can restrict this to your Vercel domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class PredictionRequest(BaseModel):
     Temperature: float
