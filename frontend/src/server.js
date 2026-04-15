@@ -5,7 +5,12 @@ const path       = require('path');
 
 const app  = express();
 const PORT = process.env.PORT || 5000;
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
+let BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
+
+// Normalize URL: remove trailing slash if present to prevent double slashes in paths
+if (BACKEND_URL.endsWith('/')) {
+    BACKEND_URL = BACKEND_URL.slice(0, -1);
+}
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,13 +58,14 @@ app.post('/get-prediction', async (req, res) => {
     } catch (err) {
         let errorMessage = 'Could not reach AI Core — is it running?';
 
+        console.error(`ERROR: Failed to reach backend at ${BACKEND_URL}/predict`);
         if (err.response) {
             console.error('AI Core returned an error:', err.response.data);
             errorMessage = err.response.data && err.response.data.detail
                 ? `AI Error: ${err.response.data.detail}`
                 : `AI Server Error (${err.response.status})`;
         } else if (err.request) {
-            console.error('No response received from AI Core:', err.message);
+            console.error('No response received from AI Core. Check if the backend URL is correct and the service is alive.');
         } else {
             console.error('Request setup error:', err.message);
         }
