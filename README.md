@@ -121,7 +121,7 @@ This project is configured for seamless deployment on **Railway** using the prov
 ### 2. Frontend (Vercel)
 Deployed the Express/EJS frontend to **Vercel**:
 
-
+Check Out: https://xai-manufacturing-inspector-pro.vercel.app
 ---
 
 ## 📱 Responsiveness
