@@ -114,7 +114,7 @@ docker run -p 8000:8000 xai-backend
 
 ## 🚢 Cloud Deployment
 
-### 1. Backend (Railway)
+### 1. Backend (Railway [previously] => Render)
 This project is configured for seamless deployment on **Railway** using the provided `backend/Dockerfile`.
 
 
